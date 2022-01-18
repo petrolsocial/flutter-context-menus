@@ -17,17 +17,17 @@ class ContextMenuRegion extends StatelessWidget {
   final bool enableLongPress;
   @override
   Widget build(BuildContext context) {
-    void showMenu(Offset globalPosition) =>
-        context.contextMenuOverlay.show(contextMenu, globalPosition);
+    void showMenu(Offset localPosition) =>
+        context.contextMenuOverlay.show(contextMenu, localPosition);
     if (isEnabled == false) return child;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onSecondaryTapDown: (details) {
-        showMenu(details.globalPosition);
+        showMenu(details.localPosition);
       }, //(showMenu),
       onLongPressStart: enableLongPress
           ? (details) {
-              showMenu(details.globalPosition);
+              showMenu(details.localPosition);
             }
           : null,
       child: child,

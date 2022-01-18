@@ -118,10 +118,10 @@ class ContextMenuOverlayState extends State<ContextMenuOverlay> {
 
   /// Sets the current menu to be displayed.
   /// It will not be displayed until next frame, as the child needs to be measured first.
-  void show(Widget child, Offset globalPosition) {
+  void show(Widget child, Offset localPosition) {
     setState(() {
       //This will hide the widget until we can calculate it's size which should take 1 frame
-      _mousePos = globalPosition;
+      _mousePos = localPosition;
       _menuSize = Size.zero;
       _currentMenu = child;
     });
