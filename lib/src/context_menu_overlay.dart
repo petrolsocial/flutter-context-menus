@@ -51,7 +51,7 @@ class ContextMenuOverlayState extends State<ContextMenuOverlay> {
   Widget? _currentMenu;
   Size? _prevSize;
   Size _menuSize = Size.zero;
-  Offset _mousePos = Offset.zero;
+  Offset mousePos = Offset.zero;
 
   ContextMenuButtonBuilder? get buttonBuilder => widget.buttonBuilder;
   ContextMenuDividerBuilder? get dividerBuilder => widget.dividerBuilder;
@@ -67,10 +67,10 @@ class ContextMenuOverlayState extends State<ContextMenuOverlay> {
         _nullMenuIfOverlayWasResized(constraints);
         // Offset the menu depending on which quadrant of the app we're in, this will make sure it always stays in bounds.
         double dx = 0, dy = 0;
-        if (_mousePos.dx > (_prevSize?.width ?? 0) / 2) dx = -_menuSize.width;
-        if (_mousePos.dy > (_prevSize?.height ?? 0) / 2) dy = -_menuSize.height;
+        if (mousePos.dx > (_prevSize?.width ?? 0) / 2) dx = -_menuSize.width;
+        if (mousePos.dy > (_prevSize?.height ?? 0) / 2) dy = -_menuSize.height;
         // The final menuPos, is mousePos + quadrant offset
-        Offset _menuPos = _mousePos + Offset(dx, dy);
+        Offset _menuPos = mousePos + Offset(dx, dy);
         Widget? menuToShow = _currentMenu;
 
         return _InheritedContextMenu(
@@ -121,7 +121,7 @@ class ContextMenuOverlayState extends State<ContextMenuOverlay> {
   void show(Widget child, Offset localPosition) {
     setState(() {
       //This will hide the widget until we can calculate it's size which should take 1 frame
-      _mousePos = localPosition;
+      mousePos = localPosition;
       _menuSize = Size.zero;
       _currentMenu = child;
     });

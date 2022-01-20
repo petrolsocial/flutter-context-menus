@@ -21,7 +21,8 @@ class GenericContextMenu extends StatefulWidget {
   _GenericContextMenuState createState() => _GenericContextMenuState();
 }
 
-class _GenericContextMenuState extends State<GenericContextMenu> with ContextMenuStateMixin {
+class _GenericContextMenuState extends State<GenericContextMenu>
+    with ContextMenuStateMixin {
   @override
   Widget build(BuildContext context) {
     // Guard against an empty list
@@ -44,10 +45,10 @@ class _GenericContextMenuState extends State<GenericContextMenu> with ContextMen
           // build a divider on null
           if (config == null) return buildDivider();
           // If not null, build a btn
-          VoidCallback? action = config.onPressed;
+          Function(Offset)? action = config.onPressed;
           // Wrap external action in handlePressed so menu will auto-close
           if (widget.autoClose && action != null) {
-            action = () => handlePressed(context, config.onPressed!);
+            action = (offset) => handlePressed(context, config.onPressed!);
           }
           // Build btn
           return buttonBuilder.call(
