@@ -8,6 +8,7 @@ class ContextMenuRegion extends StatelessWidget {
       {Key? key,
       required this.child,
       required this.contextMenu,
+      this.positionerFunc,
       this.isEnabled = true,
       this.enableLongPress = true})
       : super(key: key);
@@ -15,19 +16,26 @@ class ContextMenuRegion extends StatelessWidget {
   final Widget contextMenu;
   final bool isEnabled;
   final bool enableLongPress;
+  final Offset Function(Offset touchPosition)? positionerFunc;
   @override
   Widget build(BuildContext context) {
-    void showMenu(Offset localPosition) =>
-        context.contextMenuOverlay.show(contextMenu, localPosition);
+    void showMenu(Offset position) =>
+        context.contextMenuOverlay.show(contextMenu, position);
     if (isEnabled == false) return child;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onSecondaryTapDown: (details) {
-        showMenu(details.localPosition);
+        Offset showPos = positionerFunc == null
+            ? details.globalPosition
+            : positionerFunc!(details.globalPosition);
+        showMenu(showPos);
       }, //(showMenu),
       onLongPressStart: enableLongPress
           ? (details) {
-              showMenu(details.localPosition);
+              Offset showPos = positionerFunc == null
+                  ? details.globalPosition
+                  : positionerFunc!(details.globalPosition);
+              showMenu(showPos);
             }
           : null,
       child: child,
