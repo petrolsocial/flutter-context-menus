@@ -10,6 +10,7 @@ class ContextMenuRegion extends StatelessWidget {
       required this.contextMenu,
       this.useLocalPosition = false,
       this.positionerFunc,
+      this.onTapUp,
       this.isEnabled = true,
       this.enableLongPress = true})
       : super(key: key);
@@ -19,6 +20,8 @@ class ContextMenuRegion extends StatelessWidget {
   final bool useLocalPosition;
   final bool enableLongPress;
   final Offset Function(Offset touchPosition)? positionerFunc;
+  final void Function(Offset touchPosition)? onTapUp;
+
   @override
   Widget build(BuildContext context) {
     void showMenu(Offset position) =>
@@ -43,6 +46,9 @@ class ContextMenuRegion extends StatelessWidget {
               showMenu(showPos);
             }
           : null,
+      onTapUp: (details) {
+        onTapUp!(details.localPosition);
+      },
       child: child,
     );
   }
