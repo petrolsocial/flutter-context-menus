@@ -47,7 +47,9 @@ class ContextMenuRegion extends StatelessWidget {
             }
           : null,
       onTapUp: (details) {
-        onTapUp!(details.localPosition);
+        if (onTapUp != null) {
+          onTapUp!(details.localPosition);
+        }
       },
       child: child,
     );
